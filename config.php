@@ -1,0 +1,46 @@
+<?php
+header('Content-Type: application/json');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit;
+}
+
+$DB_HOST = 'sql301.infinityfree.com';
+$DB_NAME = 'if0_41934782_libra';
+$DB_USER = 'if0_41934782';
+$DB_PASS = 'uRBVrvmrbVZY2n8';
+
+try {
+    $pdo = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4", $DB_USER, $DB_PASS, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+} catch (Throwable $e) {
+    echo json_encode(['ok' => false, 'error' => 'Database connection failed. Check XAMPP MySQL and config.php.']);
+    exit;
+}
+
+function ok($data = []) {
+    echo json_encode(array_merge(['ok' => true], $data));
+    exit;
+}
+
+function fail($message) {
+    echo json_encode(['ok' => false, 'error' => $message]);
+    exit;
+}
+
+function require_admin($pdo, $adminId) {
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE id = ? AND role = 'admin' AND status = 'approved'");
+    $stmt->execute([$adminId]);
+    if (!$stmt->fetch()) fail('Admin permission required.');
+}
+
+function log_action($pdo, $actorId, $action) {
+    $stmt = $pdo->prepare("INSERT INTO system_logs (actor_id, action) VALUES (?, ?)");
+    $stmt->execute([$actorId ?: null, $action]);
+}
+?>
