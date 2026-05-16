@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require __DIR__ . '/config.php';
 
 $role = $_GET['role'] ?? 'user';
 $userId = intval($_GET['user_id'] ?? 0);
