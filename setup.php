@@ -9,8 +9,8 @@ $hash     = password_hash($password, PASSWORD_BCRYPT);
 // Delete old admin if exists
 $pdo->prepare("DELETE FROM users WHERE username = 'admin'")->execute();
 
-// Insert fresh admin
-$stmt = $pdo->prepare("INSERT INTO users (name, username, password, role, status) VALUES (?, ?, ?, 'admin', 'approved')");
+// Insert fresh admin with correct column name
+$stmt = $pdo->prepare("INSERT INTO users (name, username, password_hash, role, status, data_consent) VALUES (?, ?, ?, 'admin', 'approved', 1)");
 $stmt->execute([$name, $username, $hash]);
 
 echo json_encode([
