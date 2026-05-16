@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require __DIR__ . '/config.php';
 
 $q = '%' . trim($_GET['q'] ?? '') . '%';
 if (($_GET['action'] ?? '') === 'types') {
