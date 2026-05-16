@@ -8,10 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-$DB_HOST = 'sql301.infinityfree.com';
-$DB_NAME = 'if0_41934782_libra';
-$DB_USER = 'if0_41934782';
-$DB_PASS = 'uRBVrvmrbVZY2n8';
+$DB_HOST = 'ballast.proxy.rlwy.net';
+$DB_PORT = '42646';
+$DB_NAME = 'railway';
+$DB_USER = 'root';
+$DB_PASS = 'psGlNeAyvcnZfzDOgtpqyNIcSRdQtEZB';
 
 try {
     $pdo = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4", $DB_USER, $DB_PASS, [
