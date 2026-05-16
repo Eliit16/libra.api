@@ -1,4 +1,3 @@
 <?php
-require 'config.php';
-ok(['message' => 'Libra API online']);
-?>
+require __DIR__ . '/config.php';
+ok(['message' => 'pong']);
